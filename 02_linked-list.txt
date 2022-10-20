@@ -1,0 +1,22 @@
+# Working with a linked list
+
+l: first (pointer of head node)
+p, q: auxiliary pointer variable
+
+# Traversing
+Init: p <- l
+while(p != NULL){
+    print ITEM(p)
+    p <- LINK(p)
+}
+
+# Inserting
+q <- new()
+if(q == NULL) MEMORY_ALLOCATION_FAILURE!
+Item(q) <- f
+LINK(q) <- LINK(p)
+LINK(p) <- q
+
+# Deleting
+LINK(p) <- LINK(q)
+free(q)

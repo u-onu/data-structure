@@ -1,0 +1,14 @@
+# Trees
+Def: A tree is finite set T of nodes such that
+    (1) T has one special node called root
+    (2) The remaining nodes are partitioned into m disjoint sets T1, T2, ..., Tm, and
+        each of these sets are in turn in a tree. We call them subtrees.
+
+# Binary Trees
+Def: A binary tree is a finite set of nodes either is empty of, (if not empty) consists
+    of a root and two disjoint binary trees that are called the left subtree and the right
+    subtree.
+
+# Enumeration of Binary Trees
+t(0) = 1
+t(n) = t(n - 1)t(0) + t(n - 2)t(1) + ... + t(0)t(n - 1)

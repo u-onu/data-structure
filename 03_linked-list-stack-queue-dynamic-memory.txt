@@ -1,0 +1,41 @@
+# Stack using a linked list
+
+Init: top <- NULL
+push(x){
+    p <- new()
+    if(p == NULL) OVERFLOW!
+    ITEM(p) <- x
+    LINK(p) <- top
+    top <- p
+}
+
+pop(){
+    if(top == NULL) UNDERFLOW!
+    r <- ITEM(top)
+    p <- top
+    top <- LINK(p)
+    free(p)
+    return r
+}
+
+
+# Queue using a linked list
+
+Init: first <- NULL, last: arbitrary
+push(x){
+    p <- new()
+    if(p == NULL) OVERFLOW!
+    ITEM(p) <- x
+    LINK(p) <- NULL
+    LINK(last) <- p
+    last <- p
+}
+
+pop(){
+    if(first == NULL) UNDERFLOW!
+    r <- ITEM(first)
+    p <- first
+    first <- LINK(p)
+    free(p)
+    return r
+}

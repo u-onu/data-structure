@@ -1,0 +1,45 @@
+# Implementation of a stack with an array
+
+s[m]: array of size m
+
+t: index of the place to put the pushed item
+Init: t <- 0
+
+push(x){
+    if(t > m - 1) OVERFLOW!
+    s[t] <- x
+    t <- t + 1
+}
+
+pop(){
+    if(t <= 0) UNDERFLOW!
+    t <- t - 1
+    return s[t]
+}
+
+
+
+# Implementation of a queue with an array
+
+q[m]: array of size m
+f, r: indicies to represent the current state of queue
+
+f % m: the index of the first element in the queue - 1
+r % m: the index of the last element in the queue + 1
+(size of queue: r - f - 1)
+
+Init: f <- -1, r <- 0
+
+push(x){
+    if(r - f - 1 > m) OVERFLOW!
+    q[r % m] <- x
+    r <- r + 1
+}
+
+pop(){
+    if(r - f - 1 <= 0) UNDERFLOW!
+    f <- f + 1
+    return q[f % m]
+}
+
+
