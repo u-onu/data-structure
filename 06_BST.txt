@@ -1,0 +1,189 @@
+# Binary Search Tree (BST)
+  ITEM(LLINK(T)) <= ITEM(T) < ITEM(RLINK(T))
+
+
+# Searching for a key
+
+T: pointer to a BST
+search(T, key){
+  if(T == NULL) return NULL // FAILURE!
+  if(ITEM(T) == key)
+    return T // return the found node
+  else if(key < ITEM(T))
+    return search(LLINK(T), key)
+  else
+    return search(RLINK(T), key)
+}
+
+T: pointer to a BST
+search_iter(key){
+  p: aux pointer var
+  p <- T
+
+  while(p != NULL){
+    if(ITEM(p) == key)
+      return p  // return the found node
+    else if(key < ITEM(p))
+      p <- LLINK(p)
+    else
+      p <- RLINK(p)
+    }
+
+  return NULL     // FAILURE!
+}
+
+
+
+# Adding a key
+
+T: pointer to BST
+add(key){
+  p, q, r: aux pointer var // q is the trailing pointer
+  p <- T
+
+  while(p != NULL){
+    if(key <= ITEM(p)){
+      q <- p
+      p <- LLINK(p)
+    }
+    else{
+      q <- p
+      p <- RLINK(p)
+    }
+  }
+
+  r <- new()
+  if(r == NULL) MEMORY_ALLOCATION ERROR!
+  ITEM(r) <- key
+  LLINK(r) <- NULL
+  RLINK(r) <- NULL
+  if(T == NULL)
+    T <- r
+  else if(key <= ITEM(q))
+    LLINK(q) <- r
+  else
+    RLINK(q) <- r
+}
+
+// using LOC() and CONTENTS()
+T: pointer to BST
+add(key){
+  p, q, r: aux pointer var // q is the trailing pointer
+  p <- T
+
+  while(p != NULL){
+    if(key <= ITEM(p)){
+      q <- LOC(LLINK(p))
+      p <- LLINK(p)
+    }
+    else{
+      q <- LOC(RLINK(p))
+      p <- RLINK(p)
+    }
+  }
+
+  r <- new()
+  if(r == NULL) MEMORY_ALLOCATION ERROR!
+  ITEM(r) <- key
+  LLINK(r) <- NULL
+  RLINK(r) <- NULL
+  if(T == NULL)
+    T <- r
+  CONTENTS(q) <- r
+}
+
+
+// recursive version
+add(T, key){
+  if(T == NULL){
+    T <- new()
+    if(T == NULL) MEMORY_ALLOCATION_ERROR!
+    ITEM(T) <- key
+    LLINK(T) <- NULL
+    RLINK(T) <- NULL
+  }
+  else if(key <= ITEM(T))
+    add(LLINK(T), key)
+  else
+    add(RLINK(T), key)
+}
+
+
+
+# Deletion
+T: pointer to BST
+delete(key){
+  p, q, r, s: aux pointer var // trailing pointer q, r
+  p <- T
+  q <- LOC(T)
+
+  while(p != NULL){
+    if(key < ITEM(p)){
+      q <- LOC(LLINK(p))
+      p <- LLINK(p)
+    }
+    else if(key > ITEM(p)){
+      q <- LOC(RLINK(p))
+      p <- RLINK(p)
+    }
+    else{ // key == ITEM(p)
+      // case 1: p has no children
+      if(LLINK(p) == NULL and RLINK(p) == NULL){
+        CONTENTS(q) <- NULL
+        free(p)
+        return
+      }
+
+      // case 2: p has one left child
+      else if(RLINK(p) == NULL){
+        CONTENTS(q) <= LLINK(p)
+        free(p)
+        return
+      }
+
+      // case 2: p has one right child
+      else if(LLINK(p) == NULL){
+        CONTENTS(q) <= RLINK(p)
+        free(p)
+        return
+      }
+
+      // case 3: p has two children
+      else{
+        // find its successor s
+        r <- LOC(RLINK(p))
+        s <- RLINK(p)
+        while(LLINK(s) != NULL){
+          r <- LOC(LLINK(s))
+          s <- LLINK(s)
+        }
+
+        // move s to position of p
+        CONTENTS(r) <- RLINK(s)
+        CONTENTS(q) <- s
+        LLINK(s) <- LLINK(p)
+        RLINK(s) <- RLINK(p)
+        free(p)
+        return
+      }
+    }
+  }
+
+  KEY MISSING!
+}
+
+
+
+# Height
+height(T){
+  if(T == NULL)
+    return -1
+  else{
+    l <- height(LLINK(T))
+    r <- height(RLINK(T))
+    if(l <= r)
+      return r + 1
+    else
+      return l + 1
+  }
+}
