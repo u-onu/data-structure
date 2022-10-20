@@ -1,0 +1,26 @@
+# Traversing binary trees
+
+
+# Traverse in preorder(VLR)
+preorder(T){
+    if(T == NULL) return!
+    print(ITEM(T))
+    preorder(LLINK(T))
+    preorder(RLINK(T))
+}
+
+# Traverse in inorder(LVR)
+inorder(T){
+    if(T == NULL) return!
+    inorder(LLINK(T))
+    print(ITEM(T))
+    inorder(RLINK(T))
+}
+
+# Traverse in postorder(LRV)
+postorder(T){
+    if(T == NULL) return!
+    postorder(LLINK(T))
+    postorder(RLINK(T))
+    print(ITEM(T))
+}
