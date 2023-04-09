@@ -1,1 +1,1 @@
-# data-structure with sudo code
+data-structure with pseudo code
